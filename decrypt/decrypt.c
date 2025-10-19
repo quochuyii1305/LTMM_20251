@@ -15,8 +15,13 @@ int main() {
     int ciphertext_len = sizeof(ciphertext);
     
     // Khóa giải mã (phải giống khóa mã hoá)
-    uint8_t key[] = {0x01, 0x02, 0x03, 0x06};
-    int keylen = sizeof(key);
+  char key_text[] = "DHBK";
+    int keylen = strlen(key_text);
+    // Khóa mã hoá
+    uint8_t key[256];
+    for(int i = 0; i < keylen; i++){
+        key[i] = (uint8_t)key_text[i];
+    }
     
     // Mảng chứa bản giải mã
     uint8_t plaintext[256];
