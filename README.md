@@ -29,17 +29,20 @@
 ## 📁 Cấu trúc Project
 
 ```
-RC4-Project/
+LTMM_20251/
 │
-├── Encryption Project/
-│   ├── rc4_encrypt.h          # Header chứa thuật toán mã hoá
-│   └── main_encrypt.c         # Chương trình chính mã hoá
+├── .vscode/                    # VS Code config
+├── build/                      # Folder chứa file .exe sau biên dịch
 │
-├── Decryption Project/
-│   ├── rc4_decrypt.h          # Header chứa thuật toán giải mã
-│   └── main_decrypt.c         # Chương trình chính giải mã
+├── encrypt/                    # Project mã hoá
+│   ├── encrypt.h          # Header chứa thuật toán mã hoá
+│   └── encryption.c         # Chương trình chính mã hoá
 │
-└── README.md                   # File này
+├── decrypt/                    # Project giải mã
+│   ├── decrypt.h          # Header chứa thuật toán giải mã
+│   └── decryption.c         # Chương trình chính giải mã
+│
+└── README.md              
 ```
 
 ---
@@ -48,138 +51,117 @@ RC4-Project/
 
 ### **Yêu cầu:**
 - GCC compiler (hoặc Clang, MSVC)
-- Terminal/Command Prompt
+- Terminal/PowerShell
 
 ### **Project 1: Mã hoá**
 
 ```bash
-gcc -o encrypt main_encrypt.c
+gcc -o build/encrypt encrypt/encryption.c
 ```
 
 ### **Project 2: Giải mã**
 
 ```bash
-gcc -o decrypt main_decrypt.c
+gcc -o build/decrypt decrypt/decryptiont.c
 ```
 
 ### **Biên dịch trên các hệ điều hành:**
 
-#### Linux/macOS:
-```bash
-gcc -o encrypt main_encrypt.c
-./encrypt
-```
-
-#### Windows (CMD):
-```bash
-gcc -o encrypt.exe main_encrypt.c
-encrypt.exe
-```
-
 #### Windows (PowerShell):
 ```powershell
-gcc -o encrypt.exe main_encrypt.c
-.\encrypt.exe
+gcc -o build/encrypt.exe encrypt/encryption.c
+gcc -o build/decrypt.exe decrypt/decryption.c
+```
+
+#### Linux/macOS:
+```bash
+gcc -o build/encrypt encrypt/encryption.c
+gcc -o build/decrypt decrypt/decryption.c
 ```
 
 ---
 
 ## 🚀 Hướng dẫn chạy
 
-### **Bước 1: Vào thư mục Encryption**
+### **Bước 1: Mở Terminal tại thư mục project**
 
-Mở Terminal tại thư mục chứa `main_encrypt.c`
+Shift + Right Click → "Open PowerShell here"
 
-#### Cách mở Terminal tại thư mục (Windows):
-- Shift + Right Click → "Open PowerShell here"
-- hoặc Shift + Right Click → "Open Command Window here"
+### **Bước 2: Biên dịch (nếu chưa biên dịch)**
 
-#### Linux/macOS:
 ```bash
-cd /đường/dẫn/đến/Encryption
+gcc -o build/encrypt encrypt/encryption.c
 ```
 
-### **Bước 2: Biên dịch chương trình mã hoá**
+### **Bước 3: Chạy chương trình mã hoá**
 
 ```bash
-gcc -o encrypt main_encrypt.c
-```
-
-### **Bước 3: Chạy chương trình**
-
-```bash
-./encrypt        # Linux/macOS
-.\encrypt.exe    # Windows PowerShell
-encrypt.exe      # Windows CMD
+.\build\encrypt.exe    # Windows PowerShell
+./build/encrypt        # Linux/macOS
 ```
 
 **Kết quả mong đợi:**
 ```
-========== RC4 ENCRYPTION PROJECT (Text Key) ==========
+========== RC4 ENCRYPTION PROJECT ==========
 
 Plaintext:  Hanoi University of Science and Technology
-Plaintext Length: 43
-Key (Text): SecretKey123
-Key Length: 12
+Plaintext Length: 42
+Key: 44 48 42 4B
 
-Key (HEX): 53 65 63 72 65 74 4B 65 79 31 32 33
+KeyByte: C7
+KeyByte: 02
+KeyByte: D6
+KeyByte: BA
+... (42 keybytes)
 
-Ciphertext (HEX): 8C 07 8C D2 E4 A3 CA A0 E7 11 E8 BC 53 95 FA 68 50 B8 86 91 9D 1A AA 70 06 2C EE 30 DA 59 B4 88 D7 BF 95 CC FE 47 2C EA 67 0F
+Ciphertext (HEX): 8F 63 B8 D5 61 E9 53 AE BC 72 EA 20 FA 28 3F 3C 32 71 AA 31 5E 55 F7 13 DD 99 A9 9D 02 6E DB FD 9E 6D A5 9C BA 19 2E 0A BC 52
 
-Ciphertext (ASCII): ....d.....S.......
-
-Mã hoá thành công!
+Ciphertext (ASCII): .c..a.S..r. .(?<2q.1^U.......n...m.......R
 ```
 
 ### **Bước 4: Copy ciphertext**
 
 Lấy dòng HEX từ output:
 ```
-8C 07 8C D2 E4 A3 CA A0 E7 11 E8 BC 53 95 FA 68 50 B8 86 91 9D 1A AA 70 06 2C EE 30 DA 59 B4 88 D7 BF 95 CC FE 47 2C EA 67 0F
+8F 63 B8 D5 61 E9 53 AE BC 72 EA 20 FA 28 3F 3C 32 71 AA 31 5E 55 F7 13 DD 99 A9 9D 02 6E DB FD 9E 6D A5 9C BA 19 2E 0A BC 52
 ```
 
-### **Bước 5: Cập nhật ciphertext trong main_decrypt.c**
+### **Bước 5: Cập nhật ciphertext trong decrypt/main_decrypt.c**
 
-Mở file `main_decrypt.c` và tìm:
+Mở file `decrypt/decryption.c` và tìm:
 ```c
 uint8_t ciphertext[] = {
-    0x8C, 0x07, 0x8C, 0xD2, ...
+    0x8F, 0x63, 0xB8, 0xD5, ...
 };
 ```
 
-Thay thế bằng ciphertext vừa tạo (có dạng: `0x8C, 0x07, 0x8C, ...`)
+Thay thế bằng ciphertext vừa tạo.
 
 ### **Bước 6: Biên dịch và chạy giải mã**
 
 ```bash
-gcc -o decrypt main_decrypt.c
-./decrypt        # Linux/macOS
-.\decrypt.exe    # Windows PowerShell
-decrypt.exe      # Windows CMD
+gcc -o build/decrypt decrypt/decryption.c
+.\build\decrypt.exe    # Windows PowerShell
+./build/decrypt        # Linux/macOS
 ```
 
 **Kết quả mong đợi:**
 ```
-========== RC4 DECRYPTION PROJECT (Text Key) ==========
+========== RC4 DECRYPTION PROJECT ==========
 
-Ciphertext (HEX): 8C 07 8C D2 E4 A3 CA A0 E7 11 E8 BC 53 95 FA 68 50 B8 86 91 9D 1A AA 70 06 2C EE 30 DA 59 B4 88 D7 BF 95 CC FE 47 2C EA 67 0F
+Ciphertext (HEX): 8F 63 B8 D5 61 E9 53 AE BC 72 EA 20 FA 28 3F 3C 32 71 AA 31 5E 55 F7 13 DD 99 A9 9D 02 6E DB FD 9E 6D A5 9C BA 19 2E 0A BC 52
 
-Ciphertext Length: 43
-Key (Text): SecretKey123
-Key Length: 12
-
-Key (HEX): 53 65 63 72 65 74 4B 65 79 31 32 33
+Ciphertext Length: 42
+Key: 44 48 42 4B
 
 Plaintext: Hanoi University of Science and Technology
-
-Giải mã thành công!
 ```
 
 ---
 
 ## 🧪 Test Vector
 
-### **Test Vector 1: Key = "DHBK" (Numeric Key)**
+### **Test Vector 1: Key = "DHBK" (0x44 0x48 0x42 0x4B)**
 
 | Thành phần | Giá trị |
 |-----------|--------|
@@ -210,7 +192,7 @@ CA 08 C6 F4 D4 76 42 65 DB 2B
 
 ---
 
-### **Test Vector 2: Key = "SecretKey123" (Text Key)**
+### **Test Vector 2: Key = "SecretKey123"**
 
 | Thành phần | Giá trị |
 |-----------|--------|
@@ -249,10 +231,11 @@ CB 6E 2D 28 B1 32 0D F4 BC DF
    - Plaintext được chuyển thành Ciphertext (HEX)
    - Ciphertext có độ dài = Plaintext
    - Giá trị HEX nằm trong khoảng 00-FF
+   - Hiển thị tất cả 42 Keybytes
 
 2. ✅ **Giải mã thành công:**
    - Ciphertext được giải mã trở lại Plaintext ban đầu
-   - Plaintext khớp 100% với input
+   - Plaintext khớp 100%: `Hanoi University of Science and Technology`
 
 3. ✅ **Xác minh:**
    ```
@@ -263,13 +246,13 @@ CB 6E 2D 28 B1 32 0D F4 BC DF
 
 ```bash
 # Chạy mã hoá
-./encrypt
-# Output: Ciphertext (HEX) = 8C 07 8C D2 ...
+.\build\encryption.exe
+# Output: Ciphertext (HEX) = 8F 63 B8 D5 ...
 
-# Copy vào main_decrypt.c
+# Copy vào decrypt/main_decrypt.c
 
 # Chạy giải mã
-./decrypt
+.\build\decryption.exe
 # Output: Plaintext = "Hanoi University of Science and Technology"
 ```
 
@@ -282,24 +265,22 @@ CB 6E 2D 28 B1 32 0D F4 BC DF
 #### 1. Lỗi: `gcc: command not found`
 **Giải pháp:** Cài đặt GCC
 ```bash
-# Ubuntu/Debian
-sudo apt-get install build-essential
-
-# macOS
-brew install gcc
-
-# Windows
-Tải từ MinGW hoặc use WSL
+# Windows: Tải MinGW hoặc use WSL
+# macOS: brew install gcc
+# Linux: sudo apt-get install build-essential
 ```
 
-#### 2. Lỗi: `undefined reference to main`
-**Giải pháp:** Đảm bảo file `.c` có hàm `main()`
+#### 2. Lỗi: `cannot find folder build`
+**Giải pháp:** Tạo folder build trước
+```bash
+mkdir build
+```
 
 #### 3. Ciphertext không khớp
 **Giải pháp:**
-- Kiểm tra plaintext (có space, ký tự đặc biệt?)
-- Kiểm tra key (phải giống nhau)
-- Kiểm tra độ dài plaintext
+- Kiểm tra plaintext (42 bytes đúng không?)
+- Kiểm tra key (giống nhau chưa?)
+- Chạy lại từ đầu
 
 #### 4. Giải mã ra rác
 **Giải pháp:**
@@ -313,22 +294,22 @@ Tải từ MinGW hoặc use WSL
 
 ### **Để thử plaintext khác:**
 
-**main_encrypt.c:**
+**encrypt/main_encrypt.c:**
 ```c
 char plaintext[] = "Your text here";
 char key_text[] = "YourKeyHere";
 ```
 
-**main_decrypt.c:**
+**decrypt/main_decrypt.c:**
 - Chỉ cần update `ciphertext[]`
-- `key_text[]` phải giống `main_encrypt.c`
+- `key[]` phải giống `encrypt/encryption.c`
 
 ---
 
 ## 🎓 Cách học từ project này
 
 1. **Hiểu thuật toán RC4:**
-   - Đọc các file `.h` (header)
+   - Đọc `decrypt.h` và `decrypt.h`
    - Theo dõi từng bước khởi tạo, hoán vị, sinh khóa
 
 2. **Xem XOR hoạt động:**
@@ -348,29 +329,26 @@ char key_text[] = "YourKeyHere";
 ## 🎯 Quy trình hoàn chỉnh
 
 ```bash
-# 1. Vào thư mục Encryption
-cd Encryption
+# 1. Tạo folder build
+mkdir build
 
 # 2. Biên dịch mã hoá
-gcc -o encrypt main_encrypt.c
+gcc -o build/encrypt encrypt/encryption.c
 
 # 3. Chạy mã hoá
-./encrypt
+.\build\encryption.exe
 
 # 4. Copy ciphertext từ output
 
-# 5. Vào thư mục Decryption
-cd ../Decryption
+# 5. Cập nhật decrypt/decryption.c
 
-# 6. Cập nhật ciphertext trong main_decrypt.c
+# 6. Biên dịch giải mã
+gcc -o build/decrypt decrypt/decryption.c
 
-# 7. Biên dịch giải mã
-gcc -o decrypt main_decrypt.c
+# 7. Chạy giải mã
+.\build\decryption.exe
 
-# 8. Chạy giải mã
-./decrypt
-
-# 9. Kiểm tra plaintext có giống không
+# 8. Kiểm tra plaintext
 ```
 
 ---
@@ -387,7 +365,7 @@ gcc -o decrypt main_decrypt.c
 
 ✅ **Sử dụng VS Code** - Có terminal tích hợp  
 ✅ **Sử dụng PowerShell** - Dễ dùng hơn CMD  
-✅ **Lưu output** - Có thể copy paste dễ hơn  
+✅ **Tạo folder build** - Để file .exe gọn gàng  
 ✅ **Kiểm tra kỹ** - Mỗi byte phải chính xác  
 
 ---
