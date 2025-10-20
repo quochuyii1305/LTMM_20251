@@ -179,13 +179,44 @@ Giải mã thành công!
 
 ## 🧪 Test Vector
 
-### **Test Vector 1: Tài liệu chính (Text Key)**
+### **Test Vector 1: Key = "DHBK" (Numeric Key)**
+
+| Thành phần | Giá trị |
+|-----------|--------|
+| **Plaintext** | `Hanoi University of Science and Technology` |
+| **Key (Array)** | `[0x44, 0x48, 0x42, 0x4B]` |
+| **Plaintext Length** | 42 bytes |
+| **Key Length** | 4 bytes |
+
+**Key (HEX):**
+```
+44 48 42 4B
+D  H  B  K
+```
+
+**Expected Ciphertext (HEX):**
+```
+8F 63 B8 D5 61 E9 53 AE BC 72 EA 20 FA 28 3F 3C 
+32 71 AA 31 5E 55 F7 13 DD 99 A9 9D 02 6E DB FD 
+9E 6D A5 9C BA 19 2E 0A BC 52
+```
+
+**Keybytes sinh ra:**
+```
+C7 02 D6 BA 08 C9 06 C0 D5 04 8F 52 89 41 4B 45 
+12 1E CC 11 0D 36 9E 76 B3 FA CC BD 63 00 BF DD 
+CA 08 C6 F4 D4 76 42 65 DB 2B
+```
+
+---
+
+### **Test Vector 2: Key = "SecretKey123" (Text Key)**
 
 | Thành phần | Giá trị |
 |-----------|--------|
 | **Plaintext** | `Hanoi University of Science and Technology` |
 | **Key** | `SecretKey123` |
-| **Plaintext Length** | 43 bytes |
+| **Plaintext Length** | 42 bytes |
 | **Key Length** | 12 bytes |
 
 **Key (HEX):**
@@ -196,72 +227,16 @@ S  e  c  r  e  t  K  e  y  1  2  3
 
 **Expected Ciphertext (HEX):**
 ```
-8C 07 8C D2 E4 A3 CA A0 E7 11 E8 BC 53 95 FA 68 
-50 B8 86 91 9D 1A AA 70 06 2C EE 30 DA 59 B4 88 
-D7 BF 95 CC FE 47 2C EA 67 0F
+20 86 B7 7E A3 D4 2B 8A 66 92 38 5C 6E CD F3 F6 
+3B 30 46 77 DD 84 3D EE 9C 6D 85 59 94 8D 75 69 
+CB 6E 2D 28 B1 32 0D F4 BC DF
 ```
 
----
-
-### **Test Vector 2: Số Key**
-
-| Thành phần | Giá trị |
-|-----------|--------|
-| **Plaintext** | `Hello World` |
-| **Key (Array)** | `[0x01, 0x02, 0x03, 0x06]` |
-| **Plaintext Length** | 11 bytes |
-| **Key Length** | 4 bytes |
-
-**Key (HEX):**
+**Keybytes sinh ra:**
 ```
-01 02 03 06
-```
-
-**Cách chạy:**
-
-Sửa `main_encrypt.c`:
-```c
-char plaintext[] = "Hello World";
-int plaintext_len = strlen(plaintext);
-
-uint8_t key[] = {0x01, 0x02, 0x03, 0x06};
-int keylen = sizeof(key);
-
-// Comment out phần key_text
-```
-
----
-
-### **Test Vector 3: Key đơn giản**
-
-| Thành phần | Giá trị |
-|-----------|--------|
-| **Plaintext** | `RC4` |
-| **Key** | `Key` |
-| **Plaintext Length** | 3 bytes |
-| **Key Length** | 3 bytes |
-
-**Key (HEX):**
-```
-4B 65 79
-K  e  y
-```
-
----
-
-### **Test Vector 4: Dữ liệu nhị phân**
-
-| Thành phần | Giá trị |
-|-----------|--------|
-| **Plaintext** | `12345` |
-| **Key** | `Secret` |
-| **Plaintext Length** | 5 bytes |
-| **Key Length** | 6 bytes |
-
-**Key (HEX):**
-```
-53 65 63 72 65 74
-S  e  c  r  e  t
+68 E7 D9 11 CA F4 7E E4 0F E4 5D 2E 1D A4 87 8F 
+1B 5F 20 57 8E E7 54 8B F2 0E E0 79 F5 E3 11 49 
+9F 0B 4E 40 DF 5D 61 9B DB A6
 ```
 
 ---
