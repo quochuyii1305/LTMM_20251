@@ -370,4 +370,4 @@ gcc -o build/decrypt decrypt/decryption.c
 
 ---
 
-**Chúc bạn học tập vui vẻ!** 🚀
+
